@@ -1,14 +1,18 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { Text } from 'react-native';
 
-class Opendota extends Component {
-  render() {
-    return (
-      <View>
-        <Text>Open dota App</Text>
-      </View>
-    );
-  }
-}
+import reducers from './reducers';
+
+const Opendota = () => {
+  const store = createStore(reducers);
+
+  return (
+    <Provider store={store}>
+      <Text>Open dota App</Text>
+    </Provider>
+  );
+};
 
 export default Opendota;
