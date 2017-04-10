@@ -1,18 +1,10 @@
 import React from 'react';
-import { View, Text, TextInput } from 'react-native';
+import PlayerSearch from './PlayerSearch';
 
 const Home = () => {
   return (
-    <View>
-      <Text>Open dota App</Text>
-      <TextInput
-        placeholder={'Search for a Player'}
-        returnKeyType={'search'}
-        autoCorrect={false}
-      />
-    </View>
+    <PlayerSearch />
   );
 };
 
 export default Home;
-
