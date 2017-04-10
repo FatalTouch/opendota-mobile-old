@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { Text } from 'react-native';
+import Router from './Router';
 
 import reducers from './reducers';
 
@@ -10,7 +10,7 @@ const Opendota = () => {
 
   return (
     <Provider store={store}>
-      <Text>Open dota App</Text>
+      <Router />
     </Provider>
   );
 };
