@@ -1,11 +1,12 @@
 import React from 'react';
 import { Text, View, Image, TouchableWithoutFeedback } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 const PlayerCard = (props) => {
   const { personaname, avatarfull, account_id } = props.player;
   const { containerStyle, avatarStyle, textContainerStyle } = styles;
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={() => Actions.playerprofile({ accountId: account_id })}>
       <View style={containerStyle}>
         <Image style={avatarStyle} source={{ uri: avatarfull }} />
         <View style={textContainerStyle}>

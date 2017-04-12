@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import SearchReducer from './SearchReducer';
+import search from './SearchReducer';
+import matchList from './MatchListReducer';
 
 export default combineReducers({
-  search: SearchReducer
+  search,
+  matchList
 });
