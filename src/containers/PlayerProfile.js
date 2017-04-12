@@ -14,17 +14,9 @@ class PlayerProfile extends Component {
     return <MatchCard match={rowData} rowStyle={styles[rowId % styles.length]} />;
   }
 
-  constructor(props) {
-    super(props);
-    this.props.actions.getMatchList(this.props.accountId.toString());
-  }
-
   componentWillMount() {
+    this.props.actions.getMatchList(this.props.accountId.toString());
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-  }
-
-  componentWillUnmount() {
-    console.log('called');
   }
 
   isFetching() {

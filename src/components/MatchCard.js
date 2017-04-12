@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View, Image, TouchableWithoutFeedback } from 'react-native';
+import { Text, View, Image, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import moment from 'moment';
 
 import heroList from '../constants/heroes.json';
 import gameModeList from '../constants/game_mode.json';
@@ -13,7 +14,8 @@ const MatchCard = (props) => {
     hero_id,
     duration,
     radiant_win,
-    game_mode
+    game_mode,
+    start_time
   } = props.match;
 
   const {
@@ -26,7 +28,7 @@ const MatchCard = (props) => {
     centerTextStyle
   } = styles;
 
-  const matchMinutes = (duration / 60).toFixed();
+  const matchMinutes = Math.floor(duration / 60);
   const matchSeconds = (duration % 60);
   const heroName = heroList.heroes.find(x => x.id === hero_id).localized_name;
   const matchDuration = `${matchMinutes}:${(matchSeconds < 10 ? `0${matchSeconds}` : matchSeconds)}`;
@@ -35,31 +37,39 @@ const MatchCard = (props) => {
     ? 'Win' : 'Loss');
   const resultColor = result === 'Win' ? '#66bb6a' : '#ff4c4c';
   const gameMode = gameModeList[game_mode].name;
+  const endTime = moment.unix(start_time + duration).fromNow();
+
   return (
     <TouchableWithoutFeedback>
       <View style={[containerStyle, props.rowStyle]}>
         <Image style={avatarStyle} source={{ uri: `hero_${hero_id}` }} />
-        <View style={[textContainerStyle, { flex: 1.9 }]}>
+        <View style={[textContainerStyle, { flex: 2 }]}>
           <Text style={heroNameStyle}>{heroName}</Text>
           <Text style={subTextStyle}>{`${playerTeam} - ${gameMode}`}</Text>
         </View>
-        <View style={[textContainerStyle, { flex: 1.1 }]}>
+        <View style={[textContainerStyle, { flex: 1.4 }]}>
           <Text style={[mainTextStyle, centerTextStyle]}>{matchDuration}</Text>
-          <Text style={[subTextStyle, centerTextStyle, { color: resultColor }]}>{result}</Text>
+          <Text style={[subTextStyle, centerTextStyle]}>{endTime}</Text>
         </View>
         <View style={[textContainerStyle, { flex: 1 }]}>
-          <Text style={mainTextStyle}>{`${kills}/${deaths}/${assists}`}</Text>
+          <Text style={[mainTextStyle, centerTextStyle]}>{`${kills}/${deaths}/${assists}`}</Text>
+          <Text style={[subTextStyle, centerTextStyle, { color: resultColor }]}>{result}</Text>
         </View>
       </View>
     </TouchableWithoutFeedback>
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   containerStyle: {
-    padding: 5,
+    paddingLeft: 5,
+    paddingRight: 5,
+    paddingTop: 10,
+    paddingBottom: 10,
     flexDirection: 'row',
-    backgroundColor: 'hsla(0,0%,100%,.019)'
+    backgroundColor: 'hsla(0,0%,100%,.019)',
+    borderTopWidth: 1,
+    borderColor: 'hsla(0,0%,100%,.06)'
   },
   avatarStyle: {
     width: 52,
@@ -86,6 +96,6 @@ const styles = {
   centerTextStyle: {
     alignSelf: 'center'
   }
-};
+});
 
 export default MatchCard;
