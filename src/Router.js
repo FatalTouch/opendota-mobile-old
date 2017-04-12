@@ -8,8 +8,8 @@ const OpenDotaRouter = () => {
   return (
     <Router>
       <Scene key="home" component={Home} hideNavBar />
-      <Scene key="searchresults" component={SearchResults} />
-      <Scene key="playerprofile" component={PlayerProfile} />
+      <Scene key="searchresults" component={SearchResults} duration={300} />
+      <Scene key="playerprofile" component={PlayerProfile} duration={300} />
     </Router>
   );
 };
