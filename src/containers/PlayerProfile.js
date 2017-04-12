@@ -10,8 +10,8 @@ class PlayerProfile extends Component {
 
 
   static renderRow(rowData, sectionId, rowId) {
-    const styles = [{ backgroundColor: 'hsla(0,0%,100%,.019)' }, { backgroundColor: 'rgba(0,0,0,.019)' }]
-    return <MatchCard match={rowData} rowStyle={styles[rowId % styles.length]} />;
+    const bgColors = [{ backgroundColor: 'hsla(0,0%,100%,.019)' }, { backgroundColor: 'rgba(0,0,0,.019)' }];
+    return <MatchCard match={rowData} rowStyle={bgColors[rowId % bgColors.length]} />;
   }
 
   componentWillMount() {
