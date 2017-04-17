@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { ScrollView, ListView, ActivityIndicator } from 'react-native';
+import { View, ListView, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import getMatchList from '../actions/MatchListActions';
+import getMatchList, { requestMatchListNew } from '../actions/MatchListActions';
 import MatchCard from '../components/MatchCard';
 
 class PlayerMatches extends Component {
@@ -14,8 +14,13 @@ class PlayerMatches extends Component {
   }
 
   componentWillMount() {
-    this.props.actions.getMatchList(this.props.accountId.toString());
+    this.loadMatchList = this.loadMatchList.bind(this);
+    this.props.actions.requestMatchListNew();
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+  }
+
+  loadMatchList() {
+    this.props.actions.getMatchList(this.props.accountId.toString());
   }
 
   isFetching() {
@@ -27,15 +32,16 @@ class PlayerMatches extends Component {
 
   render() {
     return (
-      <ScrollView style={styles.containerStyle}>
+      <View style={styles.containerStyle}>
         <ListView
           dataSource={this.ds.cloneWithRows(this.props.matchList)}
           renderRow={PlayerMatches.renderRow}
           initialListSize={15}
           enableEmptySections
+          onEndReached={this.loadMatchList}
         />
         {this.isFetching()}
-      </ScrollView>
+      </View>
     );
   }
 }
@@ -51,7 +57,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => (
   {
     actions: {
-      getMatchList: bindActionCreators(getMatchList, dispatch)
+      getMatchList: bindActionCreators(getMatchList, dispatch),
+      requestMatchListNew: bindActionCreators(requestMatchListNew, dispatch)
     }
   }
 );
