@@ -13,12 +13,11 @@ function fetchFromApi(endpoint) {
   );
 }
 
-let offset = 0 - matchLimit;
-
 export const searchPlayers = text => (fetchFromApi(`search?q=${text}`));
 
-export const getMatches = (accountId, newRequest) => {
-  offset = newRequest ? 0 - matchLimit : offset + matchLimit;
+export const getMatches = (accountId, page) => {
+  console.log(page);
+  const offset = page * matchLimit;
   return fetchFromApi(`players/${accountId}/matches?limit=${matchLimit}&offset=${offset}`);
 };
 

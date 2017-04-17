@@ -27,7 +27,7 @@ export const requestMatchListNew = (accountId) => (
 
     dispatch(resetMatchList());
     dispatch(requestMatchList());
-    return getMatches(accountId, true)
+    return getMatches(accountId, 0)
       .then((data) => {
         if (data.length === 0) {
           dispatch(receiveMatchEmpty());
@@ -43,11 +43,11 @@ export const requestMatchListNew = (accountId) => (
   }
 );
 
-export default accountId => (
+export default (accountId, page) => (
   (dispatch) => {
     dispatch(requestMatchList());
 
-    return getMatches(accountId)
+    return getMatches(accountId, page)
       .then((data) => {
         if (data.length === 0) {
           dispatch(receiveMatchEmpty());

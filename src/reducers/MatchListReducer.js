@@ -7,15 +7,14 @@ import {
   REQUEST_MATCH_LIST_NEW
 } from '../actions/types';
 
-const INITIAL_STATE = { isFetching: false, isMatchListEmpty: false, matchList: [] };
+const INITIAL_STATE = { isFetching: false, isMatchListEmpty: false, matchList: [], page: 0 };
 
 export default (state = INITIAL_STATE, action) => {
-  console.log(action.type, 'payload value', action.payload, 'state value', state.matchList);
   switch (action.type) {
     case REQUEST_MATCH_LIST_NEW:
-      return { ...state, matchList: [] };
+      return { ...state, matchList: [], page: 0 };
     case REQUEST_MATCH_LIST:
-      return { ...state, isFetching: true };
+      return { ...state, isFetching: true, page: state.page + 1 };
     case RECEIVE_MATCH_LIST:
       return {
         ...state,

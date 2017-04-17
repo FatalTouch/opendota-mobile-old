@@ -15,12 +15,12 @@ class PlayerMatches extends Component {
 
   componentWillMount() {
     this.loadMatchList = this.loadMatchList.bind(this);
-    this.props.actions.requestMatchListNew();
+    this.props.actions.requestMatchListNew(this.props.accountId.toString(), this.props.page);
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
   }
-
+  
   loadMatchList() {
-    this.props.actions.getMatchList(this.props.accountId.toString());
+    this.props.actions.getMatchList(this.props.accountId.toString(), this.props.page);
   }
 
   isFetching() {
@@ -47,9 +47,9 @@ class PlayerMatches extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { matchList, isFetching, isMatchListEmpty } = state.matchList;
+  const { matchList, isFetching, isMatchListEmpty, page } = state.matchList;
   return {
-    matchList, isFetching, isMatchListEmpty
+    matchList, isFetching, isMatchListEmpty, page
   };
 };
 
