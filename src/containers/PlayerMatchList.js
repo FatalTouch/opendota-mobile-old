@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { View, ListView, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import _ from 'lodash';
 
-import getMatchList, { requestMatchListNew } from '../actions/MatchListActions';
+import getMatchList from '../actions/MatchListActions';
 import MatchCard from '../components/MatchCard';
 
 class PlayerMatches extends Component {
@@ -15,12 +16,14 @@ class PlayerMatches extends Component {
 
   componentWillMount() {
     this.loadMatchList = this.loadMatchList.bind(this);
-    this.props.actions.requestMatchListNew(this.props.accountId.toString(), this.props.page);
+    this.props.actions.getMatchList(this.props.accountId.toString(), 0);
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
   }
-  
+
   loadMatchList() {
-    this.props.actions.getMatchList(this.props.accountId.toString(), this.props.page);
+    if (!this.props.isFetching) {
+      this.props.actions.getMatchList(this.props.accountId.toString(), this.props.page);
+    }
   }
 
   isFetching() {
@@ -57,8 +60,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => (
   {
     actions: {
-      getMatchList: bindActionCreators(getMatchList, dispatch),
-      requestMatchListNew: bindActionCreators(requestMatchListNew, dispatch)
+      getMatchList: bindActionCreators(getMatchList, dispatch)
     }
   }
 );
