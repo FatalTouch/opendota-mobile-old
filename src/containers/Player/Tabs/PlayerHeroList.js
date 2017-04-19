@@ -3,18 +3,18 @@ import { View, ListView, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import getPeerList from '../actions/PeerListAction';
-import PeerCard from '../components/PeerCard';
+import getHeroList from '../../../actions/HeroListAction';
+import HeroCard from '../../../components/HeroCard';
 
-class PlayerPeerList extends Component {
+class PlayerHeroList extends Component {
 
   static renderRow(rowData, sectionId, rowId) {
     const bgColors = [{ backgroundColor: 'hsla(0,0%,100%,.019)' }, { backgroundColor: 'rgba(0,0,0,.019)' }];
-    return <PeerCard peer={rowData} rowStyle={bgColors[rowId % bgColors.length]} />;
+    return <HeroCard hero={rowData} rowStyle={bgColors[rowId % bgColors.length]} />;
   }
 
   componentWillMount() {
-    this.props.actions.getPeerList(this.props.accountId.toString());
+    this.props.actions.getHeroList(this.props.accountId.toString());
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
   }
 
@@ -29,8 +29,8 @@ class PlayerPeerList extends Component {
     return (
       <View style={styles.containerStyle}>
         <ListView
-          dataSource={this.ds.cloneWithRows(this.props.peerList)}
-          renderRow={PlayerPeerList.renderRow}
+          dataSource={this.ds.cloneWithRows(this.props.heroList)}
+          renderRow={PlayerHeroList.renderRow}
           initialListSize={15}
           enableEmptySections
         />
@@ -41,9 +41,9 @@ class PlayerPeerList extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { peerList, isFetching, isPeerListEmpty } = state.peerList;
+  const { heroList, isFetching, isHeroListEmpty } = state.heroList;
   return {
-    peerList, isFetching, isPeerListEmpty
+    heroList, isFetching, isHeroListEmpty
   };
 };
 
@@ -51,7 +51,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => (
   {
     actions: {
-      getPeerList: bindActionCreators(getPeerList, dispatch)
+      getHeroList: bindActionCreators(getHeroList, dispatch)
     }
   }
 );
@@ -63,4 +63,4 @@ const styles = {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlayerPeerList);
+export default connect(mapStateToProps, mapDispatchToProps)(PlayerHeroList);

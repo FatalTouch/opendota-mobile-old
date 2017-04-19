@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
-import PlayerSummary from './PlayerSummary';
-import PlayerMatchList from './PlayerMatchList';
-import PlayerHeroList from './PlayerHeroList';
-import PlayerPeerList from './PlayerPeerList';
+import PlayerSummary from './Tabs/PlayerSummary';
+import PlayerMatchList from './Tabs/PlayerMatchList';
+import PlayerHeroList from './Tabs/PlayerHeroList';
+import PlayerPeerList from './Tabs/PlayerPeerList';
 
 
 class PlayerProfile extends Component {

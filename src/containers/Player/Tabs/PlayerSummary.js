@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import getPlayerSummary from '../actions/SummaryAction';
+import getPlayerSummary from '../../../actions/SummaryAction';
 
 class PlayerSummary extends Component {
 

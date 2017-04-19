@@ -3,19 +3,26 @@ import { View, ListView, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import getHeroList from '../actions/HeroListAction';
-import HeroCard from '../components/HeroCard';
+import getMatchList from '../../../actions/MatchListActions';
+import MatchCard from '../../../components/MatchCard';
 
-class PlayerHeroList extends Component {
+class PlayerMatches extends Component {
 
   static renderRow(rowData, sectionId, rowId) {
     const bgColors = [{ backgroundColor: 'hsla(0,0%,100%,.019)' }, { backgroundColor: 'rgba(0,0,0,.019)' }];
-    return <HeroCard hero={rowData} rowStyle={bgColors[rowId % bgColors.length]} />;
+    return <MatchCard match={rowData} rowStyle={bgColors[rowId % bgColors.length]} />;
   }
 
   componentWillMount() {
-    this.props.actions.getHeroList(this.props.accountId.toString());
+    this.loadMatchList = this.loadMatchList.bind(this);
+    this.props.actions.getMatchList(this.props.accountId.toString(), 0);
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+  }
+
+  loadMatchList() {
+    if (!this.props.isFetching) {
+      this.props.actions.getMatchList(this.props.accountId.toString(), this.props.page);
+    }
   }
 
   isFetching() {
@@ -29,10 +36,11 @@ class PlayerHeroList extends Component {
     return (
       <View style={styles.containerStyle}>
         <ListView
-          dataSource={this.ds.cloneWithRows(this.props.heroList)}
-          renderRow={PlayerHeroList.renderRow}
+          dataSource={this.ds.cloneWithRows(this.props.matchList)}
+          renderRow={PlayerMatches.renderRow}
           initialListSize={15}
           enableEmptySections
+          onEndReached={this.loadMatchList}
         />
         {this.isFetching()}
       </View>
@@ -41,9 +49,9 @@ class PlayerHeroList extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { heroList, isFetching, isHeroListEmpty } = state.heroList;
+  const { matchList, isFetching, isMatchListEmpty, page } = state.matchList;
   return {
-    heroList, isFetching, isHeroListEmpty
+    matchList, isFetching, isMatchListEmpty, page
   };
 };
 
@@ -51,7 +59,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => (
   {
     actions: {
-      getHeroList: bindActionCreators(getHeroList, dispatch)
+      getMatchList: bindActionCreators(getMatchList, dispatch)
     }
   }
 );
@@ -63,4 +71,4 @@ const styles = {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlayerHeroList);
+export default connect(mapStateToProps, mapDispatchToProps)(PlayerMatches);

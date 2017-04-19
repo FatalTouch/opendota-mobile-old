@@ -3,26 +3,19 @@ import { View, ListView, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import getMatchList from '../actions/MatchListActions';
-import MatchCard from '../components/MatchCard';
+import getPeerList from '../../../actions/PeerListAction';
+import PeerCard from '../../../components/PeerCard';
 
-class PlayerMatches extends Component {
+class PlayerPeerList extends Component {
 
   static renderRow(rowData, sectionId, rowId) {
     const bgColors = [{ backgroundColor: 'hsla(0,0%,100%,.019)' }, { backgroundColor: 'rgba(0,0,0,.019)' }];
-    return <MatchCard match={rowData} rowStyle={bgColors[rowId % bgColors.length]} />;
+    return <PeerCard peer={rowData} rowStyle={bgColors[rowId % bgColors.length]} />;
   }
 
   componentWillMount() {
-    this.loadMatchList = this.loadMatchList.bind(this);
-    this.props.actions.getMatchList(this.props.accountId.toString(), 0);
+    this.props.actions.getPeerList(this.props.accountId.toString());
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-  }
-
-  loadMatchList() {
-    if (!this.props.isFetching) {
-      this.props.actions.getMatchList(this.props.accountId.toString(), this.props.page);
-    }
   }
 
   isFetching() {
@@ -36,11 +29,10 @@ class PlayerMatches extends Component {
     return (
       <View style={styles.containerStyle}>
         <ListView
-          dataSource={this.ds.cloneWithRows(this.props.matchList)}
-          renderRow={PlayerMatches.renderRow}
+          dataSource={this.ds.cloneWithRows(this.props.peerList)}
+          renderRow={PlayerPeerList.renderRow}
           initialListSize={15}
           enableEmptySections
-          onEndReached={this.loadMatchList}
         />
         {this.isFetching()}
       </View>
@@ -49,9 +41,9 @@ class PlayerMatches extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { matchList, isFetching, isMatchListEmpty, page } = state.matchList;
+  const { peerList, isFetching, isPeerListEmpty } = state.peerList;
   return {
-    matchList, isFetching, isMatchListEmpty, page
+    peerList, isFetching, isPeerListEmpty
   };
 };
 
@@ -59,7 +51,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => (
   {
     actions: {
-      getMatchList: bindActionCreators(getMatchList, dispatch)
+      getPeerList: bindActionCreators(getPeerList, dispatch)
     }
   }
 );
@@ -71,4 +63,4 @@ const styles = {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlayerMatches);
+export default connect(mapStateToProps, mapDispatchToProps)(PlayerPeerList);
