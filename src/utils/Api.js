@@ -23,6 +23,8 @@ export const getMatches = (accountId, page) => {
 export const getPeers = accountId => (fetchFromApi(`players/${accountId}/peers`)
 .then(result => _.remove(result, x => x.with_games > 5)));
 
+export const getHeroes = accountId => (fetchFromApi(`players/${accountId}/heroes`));
+
 export const getSummary = (accountId) => {
   const stats = fetchFromApi(`players/${accountId}`);
   const wl = fetchFromApi(`players/${accountId}/wl`);
