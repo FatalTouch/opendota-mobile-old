@@ -9,17 +9,19 @@ function fetchFromApi(endpoint) {
   const url = apiUrl + endpoint;
   return (
     axios.get(url)
-      .then(response => response.data)
+    .then(response => response.data)
   );
 }
 
 export const searchPlayers = text => (fetchFromApi(`search?q=${text}`));
 
 export const getMatches = (accountId, page) => {
-  console.log(page);
   const offset = page * matchLimit;
   return fetchFromApi(`players/${accountId}/matches?limit=${matchLimit}&offset=${offset}`);
 };
+
+export const getPeers = accountId => (fetchFromApi(`players/${accountId}/peers`)
+.then(result => _.remove(result, x => x.with_games > 5)));
 
 export const getSummary = (accountId) => {
   const stats = fetchFromApi(`players/${accountId}`);

@@ -5,7 +5,8 @@ import {
   Image, Text,
   StyleSheet,
   View,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Linking
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
@@ -35,7 +36,8 @@ class PlayerSummary extends Component {
         lose,
         solo_competitive_rank,
         competitive_rank,
-        mmr_estimate
+        mmr_estimate,
+        steamid
       } = this.props.summary;
       const {
         containerStyle,
@@ -64,7 +66,10 @@ class PlayerSummary extends Component {
               </View>
               <View style={rowStyle}>
                 <TouchableWithoutFeedback>
-                  <Icon.Button name="steam" size={12} style={{ padding: 5, backgroundColor: '#40402e' }}>
+                  <Icon.Button
+                    name="steam"
+                    size={12}
+                    style={{ padding: 5, backgroundColor: '#40402e' }}>
                     <Text style={{ color: '#fff' }}>Steam Profile</Text>
                   </Icon.Button>
                 </TouchableWithoutFeedback>
@@ -176,12 +181,4 @@ const
     }
   });
 
-export
-default
-
-connect(mapStateToProps, mapDispatchToProps)
-
-(
-  PlayerSummary
-)
-;
+export default connect(mapStateToProps, mapDispatchToProps)(PlayerSummary);

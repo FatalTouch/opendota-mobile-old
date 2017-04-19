@@ -10,9 +10,10 @@ const INITIAL_STATE = { isFetching: false, isMatchListEmpty: false, matchList: [
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case REQUEST_MATCH_LIST:
+    case REQUEST_MATCH_LIST: {
       const matchList = action.payload === 0 ? [] : state.matchList;
       return { ...state, isFetching: true, page: action.payload + 1, matchList };
+    }
     case RECEIVE_MATCH_LIST:
       return {
         ...state,
