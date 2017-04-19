@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, Image, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 import moment from 'moment';
+import { Actions } from 'react-native-router-flux';
 
 const PeerCard = (props) => {
   const {
@@ -25,7 +26,7 @@ const PeerCard = (props) => {
   const lastPlayed = moment.unix(last_played).fromNow();
   const winRate = ((with_win / with_games) * 100).toFixed(2);
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={() => Actions.playerprofile({ accountId: account_id })}>
       <View style={[containerStyle, props.rowStyle]}>
         <Image style={avatarStyle} source={{ uri: avatar }} />
         <View style={[textContainerStyle, { flex: 1.5 }]}>
