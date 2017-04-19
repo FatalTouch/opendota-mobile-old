@@ -11,7 +11,7 @@ const INITIAL_STATE = { isFetching: false, isPeerListEmpty: false, peerList: [] 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case REQUEST_PEER_LIST: {
-      return { ...state, isFetching: true, matchList: [] };
+      return { ...state, isFetching: true, peerList: [] };
     }
     case RECEIVE_PEER_LIST:
       return {
