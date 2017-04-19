@@ -36,8 +36,7 @@ class PlayerSummary extends Component {
         lose,
         solo_competitive_rank,
         competitive_rank,
-        mmr_estimate,
-        steamid
+        mmr_estimate
       } = this.props.summary;
       const {
         containerStyle,
@@ -52,7 +51,8 @@ class PlayerSummary extends Component {
 
       const {
         avatarfull,
-        personaname
+        personaname,
+        steamid
       } = profile;
 
       const winRate = `${((win / (win + lose)) * 100).toFixed(2)}%`;
@@ -65,7 +65,8 @@ class PlayerSummary extends Component {
                 <Text style={nameStyle}>{personaname}</Text>
               </View>
               <View style={rowStyle}>
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback
+                  onPress={() => Linking.openURL(`https://steamcommunity.com/profiles/${steamid}`)}>
                   <Icon.Button
                     name="steam"
                     size={12}

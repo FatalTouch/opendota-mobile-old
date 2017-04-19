@@ -14,9 +14,7 @@ class PlayerProfile extends Component {
       >
         <PlayerSummary tabLabel="Overview" accountId={this.props.accountId} />
         <PlayerMatchList tabLabel="Matches" accountId={this.props.accountId} />
-        <PlayerMatchList tabLabel="Matches" accountId={this.props.accountId} />
         <PlayerPeerList tabLabel="Peers" accountId={this.props.accountId} />
-        <PlayerMatchList tabLabel="Matches" accountId={this.props.accountId} />
       </ScrollableTabView>
     );
   }
