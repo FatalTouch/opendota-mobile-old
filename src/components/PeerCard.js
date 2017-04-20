@@ -41,7 +41,7 @@ const PeerCard = (props) => {
           <Text style={[mainTextStyle, centerTextStyle]}>{with_games.toString()}</Text>
           <Text style={[subTextStyle, centerTextStyle]}>
             <Text style={{ color: '#66bb6a' }}>{`${with_win} - `}</Text>
-            <Text style={{ color: '#ff4c4c' }}>{with_games - with_win}</Text>
+            <Text style={{ color: '#ff4c4c' }}>{(with_games - with_win).toString()}</Text>
           </Text>
         </View>
       </View>
